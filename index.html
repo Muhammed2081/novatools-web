@@ -3,45 +3,291 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NovaTools | Dashboard</title>
+    <title>NovaTools | Premium Digital Assets</title>
     <style>
-        body { 
-            background-color: #0a0a0a; 
-            color: #00ff41; 
-            font-family: 'Courier New', Courier, monospace; 
-            display: flex; 
+        @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap');
+
+        :root {
+            --bg-color: #050505;
+            --card-bg: rgba(20, 20, 25, 0.6);
+            --primary: #00f3ff;
+            --secondary: #b026ff;
+            --text-main: #ffffff;
+            --text-muted: #8b8b99;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(176, 38, 255, 0.08), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(0, 243, 255, 0.08), transparent 25%);
+            min-height: 100vh;
+            display: flex;
             flex-direction: column;
-            align-items: center; 
-            justify-content: center; 
-            height: 100vh; 
-            margin: 0; 
+        }
+
+        /* Navbar */
+        nav {
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links a {
+            color: var(--text-main);
+            text-decoration: none;
+            margin-left: 30px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 80px 20px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 30px auto;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border: none;
+            padding: 12px 30px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(176, 38, 255, 0.3);
+        }
+
+        /* Products Grid */
+        .products-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            flex-grow: 1;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            border-left: 4px solid var(--primary);
+            padding-left: 15px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s, border-color 0.3s;
+            position: relative;
             overflow: hidden;
         }
-        .matrix-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
-            opacity: 0.1;
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, var(--primary), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
         }
-        .panel {
-            border: 2px solid #00ff41;
-            padding: 40px;
-            background: rgba(0, 20, 0, 0.8);
-            box-shadow: 0 0 20px #00ff41;
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 243, 255, 0.3);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card-tag {
+            background: rgba(176, 38, 255, 0.2);
+            color: var(--secondary);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 15px;
+        }
+
+        .price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .btn-buy {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .btn-buy:hover {
+            background: var(--primary);
+            color: #000;
+        }
+
+        /* Footer */
+        footer {
             text-align: center;
+            padding: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+            margin-top: 50px;
         }
-        h1 { font-size: 2.5em; text-transform: uppercase; letter-spacing: 5px; margin-bottom: 10px; }
-        .status { font-size: 1.2em; margin-bottom: 20px; border-bottom: 1px solid #00ff41; display: inline-block; }
-        .blink { animation: blinker 1s linear infinite; }
-        @keyframes blinker { 50% { opacity: 0; } }
+
+        footer span {
+            color: var(--secondary);
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 15px 20px; flex-direction: column; gap: 15px; }
+            .hero h1 { font-size: 2.5rem; }
+            .nav-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; }
+            .nav-links a { margin: 0; }
+        }
     </style>
 </head>
 <body>
-    <div class="panel">
-        <h1>NOVATOOLS</h1>
-        <div class="status">> SYSTEM STATUS: <span class="blink">LOADING...</span></div>
-        <p>Hoş geldin Lurexa.</p>
-        <p>Cybersecurity projeleri ve checker araçları yakında burada aktif edilecek.</p>
+
+    <nav>
+        <div class="logo">NOVATOOLS</div>
+        <div class="nav-links">
+            <a href="#">Ana Sayfa</a>
+            <a href="#products">Araçlar</a>
+            <a href="https://t.me/NovaCloudChannels" target="_blank">Telegram</a>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <h1>Gelişmiş Siber Güvenlik Araçları</h1>
+        <p>Premium kalitede checker yazılımları, dork tarayıcılar ve yüksek hızlı web scraper çözümleri. Sisteminizi bir üst seviyeye taşıyın.</p>
+        <a href="#products" class="btn-primary">Kataloğu İncele</a>
     </div>
+
+    <div class="products-container" id="products">
+        <h2 class="section-title">Popüler Modüller</h2>
+        
+        <div class="grid">
+            <div class="card">
+                <div class="card-tag">Python Script</div>
+                <h3>Hotmail Checker Pro</h3>
+                <p>Yüksek hızlı, proxy destekli ve düşük hata oranlı gelişmiş Hotmail hesap kontrol modülü. Combo listelerinizi saniyeler içinde tarayın.</p>
+                <div class="card-footer">
+                    <div class="price">Ücretsiz</div>
+                    <a href="#" class="btn-buy">İndir</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-tag">Premium API</div>
+                <h3>Razer Gold Validator</h3>
+                <p>Güvenli altyapı ile hızlı bakiye ve hesap doğrulama sistemi. Özel bypass yöntemleri ile kesintisiz tarama imkanı.</p>
+                <div class="card-footer">
+                    <div class="price">Yakında</div>
+                    <a href="#" class="btn-buy">Detaylar</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-tag">Multi-Tool</div>
+                <h3>Nova Crack Tool V1</h3>
+                <p>İçerisinde Proxy Scraper, Hash Editor ve Dork Scanner barındıran hepsi bir arada devasa sistem yöneticisi.</p>
+                <div class="card-footer">
+                    <div class="price">Geliştiriliyor</div>
+                    <a href="https://t.me/NovaCloudChannels" class="btn-buy">Takip Et</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Developed by <strong>Lurexa</strong>. Inspired by the stars, crafted with <span>@AsteriaNovaClouds</span>.</p>
+        <p style="font-size: 0.8rem; margin-top: 10px;">&copy; 2026 NovaTools. Tüm hakları saklıdır.</p>
+    </footer>
+
 </body>
 </html>
